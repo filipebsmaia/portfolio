@@ -1,0 +1,17 @@
+@use '@/styles/variables' as *
+
+@keyframes blink
+  0%, 50%
+    opacity: 1
+  51%, 100%
+    opacity: 0
+
+.typing
+  display: inline
+
+.cursor
+  display: inline-block
+  color: $primary
+  animation: blink 1s step-end infinite
+  margin-left: 1px
+  font-weight: 300

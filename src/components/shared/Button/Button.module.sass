@@ -1,0 +1,34 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.button
+  display: inline-flex
+  align-items: center
+  gap: 0.5rem
+  padding: 0.65rem 1.5rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  font-weight: 500
+  border-radius: $radius-md
+  text-decoration: none
+  cursor: pointer
+  transition: all $transition-base
+
+.primary
+  background: rgba($primary, 0.12)
+  color: $primary
+  border: 1px solid rgba($primary, 0.3)
+  &:hover
+    background: rgba($primary, 0.2)
+    border-color: rgba($primary, 0.5)
+    box-shadow: 0 0 20px rgba($primary, 0.15)
+    color: $primary
+
+.outline
+  background: transparent
+  color: $text
+  border: 1px solid $border
+  &:hover
+    border-color: $muted
+    color: $text
+    background: rgba($border, 0.3)

@@ -1,0 +1,92 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+@keyframes blink
+  0%, 50%
+    opacity: 1
+  51%, 100%
+    opacity: 0
+
+.about
+  +section-padding
+
+.container
+  +container
+
+.terminal
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  line-height: 1.7
+  max-height: 350px
+  overflow-y: auto
+  cursor: text
+  scrollbar-width: thin
+  scrollbar-color: $border transparent
+  @media (min-width: $bp-tablet)
+    font-size: 0.85rem
+    max-height: 400px
+
+.commandLine
+  color: $text
+  white-space: pre-wrap
+  word-break: break-word
+
+.outputLine
+  color: $muted
+  padding-left: 0.5rem
+  white-space: pre-wrap
+  word-break: break-word
+
+.inputLine
+  display: flex
+  align-items: center
+  gap: 0.5rem
+
+.prompt
+  color: $primary
+  white-space: nowrap
+  flex-shrink: 0
+  user-select: none
+
+.input
+  flex: 1
+  background: none
+  border: none
+  outline: none
+  color: $text
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: inherit
+  padding: 0
+  caret-color: $primary
+
+.stats
+  display: grid
+  grid-template-columns: 1fr
+  gap: 1rem
+  margin-top: 2rem
+  +respond-to($bp-mobile)
+    grid-template-columns: repeat(3, 1fr)
+
+.statCard
+  +terminal-border
+  display: flex
+  align-items: center
+  gap: 1rem
+  padding: 1.25rem
+  transition: border-color $transition-base
+  &:hover
+    border-color: rgba($primary, 0.3)
+
+.statIcon
+  color: $primary
+  flex-shrink: 0
+
+.statValue
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 1.1rem
+  font-weight: 600
+  color: $text
+
+.statLabel
+  font-size: 0.8rem
+  color: $muted

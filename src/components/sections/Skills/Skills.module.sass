@@ -1,0 +1,77 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.skills
+  +section-padding
+
+.container
+  +container
+
+.loadingHeader
+  margin-bottom: 2rem
+
+.prompt
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: $primary
+
+.categories
+  display: flex
+  flex-direction: column
+  gap: 1.5rem
+
+.category
+  margin-bottom: 0.5rem
+
+.categoryLabel
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  color: $secondary
+  margin-bottom: 0.5rem
+
+.skillsList
+  display: flex
+  flex-direction: column
+  gap: 0.15rem
+
+.skillLine
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  color: $text
+  padding: 0.3rem 0.5rem
+  border-radius: $radius-sm
+  white-space: nowrap
+  overflow-x: auto
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  transition: background $transition-fast
+  &:hover
+    background: rgba($border, 0.3)
+  +respond-to($bp-tablet)
+    font-size: 0.85rem
+
+.loaded
+  color: $muted
+  flex-shrink: 0
+
+.moduleName
+  color: $text
+  flex-shrink: 0
+  min-width: 0
+  +respond-to($bp-tablet)
+    min-width: 220px
+
+.bar
+  color: $primary
+  flex-shrink: 0
+  letter-spacing: 0
+  font-variant-ligatures: none
+
+.level
+  color: $muted
+  font-size: 0.75rem
+  flex-shrink: 0
+  display: none
+  +respond-to($bp-mobile)
+    display: inline

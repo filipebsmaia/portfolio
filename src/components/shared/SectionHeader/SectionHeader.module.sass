@@ -1,0 +1,23 @@
+@use '@/styles/variables' as *
+
+.header
+  margin-bottom: 2.5rem
+
+.path
+  display: block
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  color: $muted
+  margin-bottom: 0.5rem
+
+.title
+  font-size: 1.5rem
+  color: $text
+  margin-bottom: 1rem
+  @media (min-width: $bp-tablet)
+    font-size: 1.75rem
+
+.divider
+  height: 1px
+  background: linear-gradient(to right, $primary, transparent)
+  max-width: 200px

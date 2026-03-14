@@ -1,0 +1,435 @@
+import { version } from '@/../package.json';
+
+import type { PortfolioData } from '@/types';
+
+export const portfolio: PortfolioData = {
+  nav: [
+    { label: 'About', href: '#about', fileName: 'about.md' },
+    { label: 'Skills', href: '#skills', fileName: 'skills.json' },
+    { label: 'Experience', href: '#experience', fileName: 'experience.git' },
+    { label: 'Projects', href: '#projects', fileName: 'projects/' },
+    { label: 'Contact', href: '#contact', fileName: 'contact.exe' },
+  ],
+
+  hero: {
+    greeting: "Hello, I'm",
+    name: 'Filipe Maia',
+    title: 'Software Engineer',
+    subtitle: 'Fullstack Developer focused on backend - TypeScript, React/Next.js & Node.js',
+    statusText: 'ONLINE',
+    kernelVersion: version,
+    modules: ['TYPESCRIPT', 'REACT', 'NEXT.JS', 'NODE.JS'],
+    cta: {
+      primary: { label: 'View Projects', href: '#projects' },
+      secondary: {
+        label: 'GitHub Profile',
+        href: 'https://github.com/filipebsmaia',
+      },
+    },
+  },
+
+  about: {
+    shellCommands: {
+      whoami: ['Filipe Maia - Software Engineer @ Unifique Telecomunicações'],
+      'cat bio.txt': [
+        'Fullstack developer focused on backend, passionate about building',
+        'scalable and well-architected software. I work with TypeScript,',
+        'React/Next.js, and Node.js - focused on Clean Architecture,',
+        'Domain-Driven Design, and modern development practices.',
+        '',
+        'I believe great software comes from clean code, solid patterns,',
+        'and continuous learning. From microservices to cloud-native systems,',
+        'I enjoy solving complex problems with elegant solutions.',
+      ],
+      'cat stack.txt': ['TypeScript, React/Next.js, Node.js, Java'],
+      'cat certifications.txt': [
+        'Google Cloud Associate Cloud Engineer',
+        'https://www.credly.com/badges/33118399-1489-4b35-bb8b-ad8d56c13501',
+      ],
+      ls: ['bio.txt  stack.txt  certifications.txt', 'skills/  projects/'],
+      'ls -la': [
+        'total 24',
+        'drwxr-xr-x  4 root root 4096 Mar 13 10:00 .',
+        'drwxr-xr-x  3 root root 4096 Mar 13 09:00 ..',
+        '-rw-r--r--  1 root root  512 Mar 13 10:00 bio.txt',
+        '-rw-r--r--  1 root root  128 Mar 13 10:00 stack.txt',
+        '-rw-r--r--  1 root root  256 Mar 13 10:00 certifications.txt',
+        'drwxr-xr-x  8 root root 4096 Mar 13 10:00 skills/',
+        'drwxr-xr-x  8 root root 4096 Mar 13 10:00 projects/',
+      ],
+      'ls skills/': ['languages/  frontend/  backend/  ops-cloud/', 'architecture/  technologies/'],
+      'ls -la skills/': [
+        'total 24',
+        'drwxr-xr-x  8 root root 4096 Mar 13 10:00 .',
+        'drwxr-xr-x  4 root root 4096 Mar 13 10:00 ..',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 languages/',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 frontend/',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 backend/',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 ops-cloud/',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 architecture/',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 technologies/',
+      ],
+      'ls projects/': [
+        'ceu-gg.md  saga-library.md  ddd-with-nestjs.md',
+        'clean-architecture-ts-template.md  gobarber.md  ecoleta.md',
+      ],
+      'ls -la projects/': [
+        'total 32',
+        'drwxr-xr-x  2 root root 4096 Mar 13 10:00 .',
+        'drwxr-xr-x  4 root root 4096 Mar 13 10:00 ..',
+        '-rw-r--r--  1 root root  340 Mar 13 10:00 ceu-gg.md',
+        '-rw-r--r--  1 root root  280 Mar 13 10:00 saga-library.md',
+        '-rw-r--r--  1 root root  310 Mar 13 10:00 ddd-with-nestjs.md',
+        '-rw-r--r--  1 root root  260 Mar 13 10:00 clean-architecture-ts-template.md',
+        '-rw-r--r--  1 root root  290 Mar 13 10:00 gobarber.md',
+        '-rw-r--r--  1 root root  270 Mar 13 10:00 ecoleta.md',
+      ],
+      'cat projects/ceu-gg.md': [
+        '# ceu.gg',
+        'Brazilian saas-like platform providing free Minecraft server hosting',
+        'with a web management panel.',
+        '',
+        'Stack: TypeScript, Node.js, Kubernetes, Proxmox, PostgreSQL, Kafka',
+        'Status: In Production',
+        'URL: https://www.ceu.gg',
+      ],
+      'cat projects/saga-library.md': [
+        '# Saga Library',
+        'TypeScript library for implementing the Saga pattern for',
+        'managing distributed transactions, event streaming, and async workflows.',
+        '',
+        'Stack: TypeScript, Saga Pattern, Event Streaming',
+        'Repo: github.com/filipebsmaia/saga-library',
+      ],
+      'cat projects/ddd-with-nestjs.md': [
+        '# DDD with NestJS',
+        'Clean Architecture template implementing Domain-Driven Design',
+        'patterns with NestJS. A reference for scalable backend structure.',
+        '',
+        'Stack: TypeScript, NestJS, Prisma, DDD, Clean Architecture',
+        'Repo: github.com/filipebsmaia/ddd-with-nestjs',
+      ],
+      'cat projects/clean-architecture-ts-template.md': [
+        '# Clean Architecture Template',
+        'TypeScript template implementing Clean Architecture principles',
+        'for Node.js applications.',
+        '',
+        'Stack: TypeScript, Node.js, Clean Architecture',
+        'Repo: github.com/filipebsmaia/clean-architecture-ts-template',
+      ],
+      'cat projects/gobarber.md': [
+        '# GoBarber',
+        'Full-featured barbershop appointment scheduling application',
+        'with a complete web client built using React and TypeScript.',
+        '',
+        'Stack: TypeScript, React, Styled Components, REST API',
+        'Repo: github.com/filipebsmaia/gobarber-typescript-web',
+      ],
+      'cat projects/ecoleta.md': [
+        '# Ecoleta',
+        'Recycling collection point finder with backend, web, and mobile',
+        'applications. Connects people to recycling drop-off points.',
+        '',
+        'Stack: TypeScript, React, Node.js, React Native, SQLite',
+        'Repo: github.com/filipebsmaia/Ecoleta',
+      ],
+      'uname -a': ['FilipeOS 1.0.0 portfolio x86_64 TypeScript/Node.js GNU/Linux'],
+      help: [
+        'Available commands:',
+        '',
+        '  whoami              - who am I',
+        '  ls                  - list files',
+        '  cd <dir>            - change directory',
+        '  cat <path>          - read file contents',
+        '  pwd                 - print working directory',
+        '  uname -a            - system info',
+        '  clear               - clear terminal',
+        '  help                - show this message',
+        '',
+      ],
+    },
+    initialCommands: ['whoami', 'cat bio.txt'],
+    stats: [
+      { label: 'Public Repos', value: '50+', icon: 'GitBranch' },
+      { label: 'Open Source', value: 'Active', icon: 'Globe' },
+      { label: 'Arctic Vault', value: 'Contributor', icon: 'Award' },
+    ],
+  },
+
+  skills: {
+    categories: [
+      {
+        id: 'languages',
+        label: 'Languages',
+        prefix: 'lang',
+        skills: [
+          { name: 'TypeScript', proficiency: 'expert' },
+          { name: 'JavaScript', proficiency: 'expert' },
+          { name: 'Java', proficiency: 'intermediate' },
+          { name: 'SQL', proficiency: 'advanced' },
+          { name: 'NO-SQL', proficiency: 'intermediate' },
+        ],
+      },
+      {
+        id: 'frontend',
+        label: 'Frontend',
+        prefix: 'fe',
+        skills: [
+          { name: 'React', proficiency: 'advanced' },
+          { name: 'Next.js', proficiency: 'advanced' },
+          { name: 'React Native', proficiency: 'intermediate' },
+          { name: 'HTML5', proficiency: 'advanced' },
+          { name: 'CSS / Sass', proficiency: 'advanced' },
+        ],
+      },
+      {
+        id: 'backend',
+        label: 'Backend',
+        prefix: 'be',
+        skills: [
+          { name: 'Node.js', proficiency: 'advanced' },
+          { name: 'NestJS', proficiency: 'advanced' },
+          { name: 'Express', proficiency: 'advanced' },
+        ],
+      },
+      {
+        id: 'devops',
+        label: 'Ops & Cloud',
+        prefix: 'ops',
+        skills: [
+          { name: 'Docker', proficiency: 'advanced' },
+          { name: 'Kubernetes', proficiency: 'intermediate' },
+          { name: 'Google Cloud', proficiency: 'intermediate' },
+          { name: 'Git', proficiency: 'advanced' },
+          { name: 'CI/CD', proficiency: 'advanced' },
+        ],
+      },
+      {
+        id: 'architecture',
+        label: 'Architecture',
+        prefix: 'arch',
+        skills: [
+          { name: 'Clean Architecture', proficiency: 'advanced' },
+          { name: 'DDD', proficiency: 'advanced' },
+          { name: 'Microservices', proficiency: 'advanced' },
+          { name: 'Async Processing', proficiency: 'advanced' },
+          { name: 'Design Patterns', proficiency: 'advanced' },
+          { name: 'Refactoring Guru', proficiency: 'intermediate' },
+        ],
+      },
+      {
+        id: 'technologies',
+        label: 'Technologies',
+        prefix: 'tech',
+        skills: [
+          { name: 'PostgreSQL', proficiency: 'advanced' },
+          { name: 'Kafka', proficiency: 'advanced' },
+          { name: 'OpenTelemetry', proficiency: 'intermediate' },
+          { name: 'Redis', proficiency: 'advanced' },
+        ],
+      },
+    ],
+  },
+
+  experience: {
+    entries: [
+      {
+        hash: 'f2d9a1c',
+        company: 'Unifique Telecomunicações',
+        role: 'Senior Software Engineer - Cross-squad',
+        period: 'May 2025 - Present',
+        description:
+          'Cross-squad engineering support, building solutions and participating in architectural decisions and migrations to improve developer experience across teams.',
+        highlights: [
+          'Introduced architectural patterns such as Strategy, Specification, Policy, Saga, etc., ensuring responsibility isolation and improving service maintainability.',
+          'Integrated OpenTelemetry across microservices for improved observability, and built dashboards for clear system visualization.',
+          'Participated in defining and adapting GMUD (change management) processes for the team.',
+        ],
+        technologies: [
+          'TypeScript',
+          'Node.js',
+          'OpenTelemetry',
+          'Datadog',
+          'Google Cloud',
+          'GKE',
+          'Kubernetes',
+          'Docker',
+          'Kafka',
+          'PostgreSQL',
+        ],
+      },
+      {
+        hash: 'e7a1f3b',
+        company: 'Unifique Telecomunicações',
+        role: 'Tech Lead',
+        period: 'Apr 2023 - May 2025',
+        description:
+          'Led architecture and engineering across multiple squads for the BOSS platform (BSS + OSS) powering mobile consumer, B2B, MVNE, and MVNO services.',
+        highlights: [
+          'Led the Concierge (B2B) and MVNX (MVNE/MVNO) squads, mentoring engineers, driving architectural decisions, and building the MVNX platform from scratch.',
+          'Designed TCP/socket libraries for direct communication with 5G core network elements, and built a cross-service audit middleware used across back-office, API integrations, and the MVNX platform.',
+          'Created the core ABAC + RBAC permission system from scratch, handling all platform authorization.',
+          'Participated in key decisions and implementation of a critical optimization of the customer renewal flow, reducing processing time from 3 days to under 6 hours.',
+        ],
+        technologies: [
+          'TypeScript',
+          'Node.js',
+          'React',
+          'Google Cloud',
+          'GKE',
+          'Kubernetes',
+          'Docker',
+          'Kafka',
+          'PostgreSQL',
+        ],
+      },
+      {
+        hash: 'b4c2d8a',
+        company: 'Unifique Telecomunicações',
+        role: 'Pleno Software Engineer',
+        period: 'Aug 2022 - Apr 2023',
+        description:
+          'Architected and built core telecom infrastructure, participating in technical decisions from early platform design through production.',
+        highlights: [
+          'Developed 60+ mission-critical microservices for mobile telephony on Node.js, PostgreSQL, Kafka, and GKE, maintaining 99+% SLA.',
+          'Co-architected the BOSS platform (BSS + OSS) following ODA standards, operating the entire mobile telephony stack.',
+          'Built a high-throughput binary processor for network CDRs (Call Detail Records), continuously optimized for big data volumes.',
+        ],
+        technologies: [
+          'TypeScript',
+          'Node.js',
+          'React',
+          'Google Cloud',
+          'GKE',
+          'Kubernetes',
+          'Docker',
+          'Kafka',
+          'PostgreSQL',
+        ],
+      },
+      {
+        hash: 'a3f7c2e',
+        company: 'Fluke',
+        role: 'Pleno Software Engineer',
+        period: 'Jan 2022 - Aug 2022',
+        description:
+          'Main developer for the web platform. Led architecture decisions and implementation, built the new acquisition portal, site pages, and blog system.',
+        technologies: ['Next.js', 'React', 'TypeScript', 'Firebase'],
+      },
+      {
+        hash: '9d1e5f4',
+        company: 'Fluke',
+        role: 'Junior Software Engineer',
+        period: 'Jun 2021 - Dec 2021',
+        description:
+          'Backend-focused development. Participated in architecture decisions, created new microservices, and split oversized services into smaller, focused units.',
+        technologies: ['Node.js', 'TypeScript', 'Firebase', 'Pub/Sub'],
+      },
+      {
+        hash: '6c8b3a2',
+        company: 'Fluke',
+        role: 'Intern Software Engineer',
+        period: 'Oct 2020 - May 2021',
+        description: 'Backend and mobile development across Node.js services and a React Native application.',
+        technologies: ['Node.js', 'TypeScript', 'React Native', 'Firebase'],
+      },
+    ],
+  },
+
+  projects: {
+    items: [
+      {
+        name: 'ceu.gg',
+        description:
+          'Brazilian saas-like platform providing free Minecraft server hosting with a web management panel. Self-managed infrastructure with Kubernetes orchestration, Proxmox virtualization, and low-latency networking optimized for Latin American users.',
+        technologies: ['In Production', 'TypeScript', 'Node.js', 'Kubernetes', 'Proxmox', 'PostgreSQL', 'Kafka', 'Grafana'],
+        demoUrl: 'https://www.ceu.gg',
+        language: 'TypeScript',
+        languageColor: '#3178C6',
+        featured: true,
+      },
+      {
+        name: 'Saga Library',
+        description:
+          'A TypeScript library for implementing the Saga pattern for managing distributed transactions, event streaming, and async workflows.',
+        technologies: ['TypeScript', 'Saga Pattern', 'Event Streaming', 'Async Processing'],
+        githubUrl: 'https://github.com/filipebsmaia/saga-library',
+        language: 'TypeScript',
+        languageColor: '#3178C6',
+        featured: true,
+      },
+      {
+        name: 'DDD with NestJS',
+        description:
+          'Clean Architecture template implementing Domain-Driven Design patterns with NestJS. A reference for scalable backend structure.',
+        technologies: ['TypeScript', 'NestJS', 'Prisma', 'DDD', 'Clean Architecture'],
+        githubUrl: 'https://github.com/filipebsmaia/ddd-with-nestjs',
+        language: 'TypeScript',
+        languageColor: '#3178C6',
+        featured: true,
+      },
+      {
+        name: 'Clean Architecture Template',
+        description:
+          'TypeScript template repository implementing Clean Architecture principles for Node.js applications. A reference for scalable project structure.',
+        technologies: ['TypeScript', 'Node.js', 'Clean Architecture'],
+        githubUrl: 'https://github.com/filipebsmaia/clean-architecture-ts-template',
+        language: 'TypeScript',
+        languageColor: '#3178C6',
+        featured: false,
+      },
+      {
+        name: 'GoBarber',
+        description:
+          'Full-featured barbershop appointment scheduling application with a complete web client built using React and TypeScript.',
+        technologies: ['TypeScript', 'React', 'Styled Components', 'REST API'],
+        githubUrl: 'https://github.com/filipebsmaia/gobarber-typescript-web',
+        language: 'TypeScript',
+        languageColor: '#3178C6',
+        featured: false,
+      },
+      {
+        name: 'Ecoleta',
+        description:
+          'Recycling collection point finder with backend, web, and mobile applications. Connects people to recycling drop-off points.',
+        technologies: ['TypeScript', 'React', 'Node.js', 'React Native', 'SQLite'],
+        githubUrl: 'https://github.com/filipebsmaia/Ecoleta',
+        language: 'TypeScript',
+        languageColor: '#3178C6',
+        featured: false,
+      },
+    ],
+    githubProfileUrl: 'https://github.com/filipebsmaia?tab=repositories',
+  },
+
+  contact: {
+    email: 'filipebsmaia@gmail.com',
+    linkedinUrl: 'https://linkedin.com/in/filipebsmaia',
+    socialLinks: [
+      {
+        platform: 'GitHub',
+        url: 'https://github.com/filipebsmaia',
+        icon: 'Github',
+        username: 'filipebsmaia',
+      },
+      {
+        platform: 'LinkedIn',
+        url: 'https://linkedin.com/in/filipebsmaia',
+        icon: 'Linkedin',
+        username: 'filipebsmaia',
+      },
+      {
+        platform: 'Email',
+        url: 'mailto:filipebsmaia@gmail.com',
+        icon: 'Mail',
+        username: 'filipebsmaia@gmail.com',
+      },
+    ],
+    availability: 'Currently employed',
+  },
+
+  footer: {
+    builtWith: ['Next.js', 'TypeScript', 'Sass'],
+    sourceUrl: 'https://github.com/filipebsmaia/portfolio',
+  },
+};

@@ -1,0 +1,90 @@
+@use 'sass:color'
+@use '../styles/variables' as *
+
+=respond-to($bp)
+  @media (min-width: $bp)
+    @content
+
+*,
+*::before,
+*::after
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+\:root
+  --color-bg: #{$bg}
+  --color-surface: #{$surface}
+  --color-surface-light: #{$surface-light}
+  --color-border: #{$border}
+  --color-primary: #{$primary}
+  --color-secondary: #{$secondary}
+  --color-text: #{$text}
+  --color-muted: #{$muted}
+
+html
+  scroll-behavior: smooth
+  scrollbar-width: thin
+  scrollbar-color: $border $bg
+
+body
+  font-family: var(--font-ibm-plex-sans), system-ui, -apple-system, sans-serif
+  color: $text
+  background: $bg
+  line-height: 1.6
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+h1, h2, h3, h4, h5, h6
+  font-family: var(--font-jetbrains-mono), monospace
+  line-height: 1.2
+  font-weight: 600
+
+h1
+  font-size: 2rem
+  +respond-to($bp-tablet)
+    font-size: 2.75rem
+  +respond-to($bp-desktop)
+    font-size: 3.25rem
+
+h2
+  font-size: 1.5rem
+  +respond-to($bp-tablet)
+    font-size: 1.75rem
+
+h3
+  font-size: 1.125rem
+  +respond-to($bp-tablet)
+    font-size: 1.25rem
+
+a
+  color: $primary
+  text-decoration: none
+  transition: color $transition-fast
+  &:hover
+    color: color.scale($primary, $lightness: 20%)
+
+code, pre, .mono
+  font-family: var(--font-jetbrains-mono), monospace
+
+::selection
+  background: rgba($primary, 0.25)
+  color: $text
+
+\::-webkit-scrollbar
+  width: 6px
+
+\::-webkit-scrollbar-track
+  background: $bg
+
+\::-webkit-scrollbar-thumb
+  background: $border
+  border-radius: 3px
+  &:hover
+    background: $muted
+
+@media (prefers-reduced-motion: reduce)
+  *
+    animation-duration: 0.01ms !important
+    animation-iteration-count: 1 !important
+    transition-duration: 0.01ms !important

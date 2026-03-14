@@ -1,0 +1,168 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.projects
+  +section-padding
+
+.container
+  +container
+
+.grid
+  display: grid
+  grid-template-columns: 1fr
+  gap: 1.5rem
+  margin-bottom: 3rem
+  +respond-to($bp-tablet)
+    grid-template-columns: repeat(2, 1fr)
+  +respond-to($bp-desktop)
+    grid-template-columns: repeat(3, 1fr)
+
+.gridItem
+  height: 100%
+
+.cardContent
+  display: flex
+  flex-direction: column
+  flex: 1
+
+.cardHeader
+  display: flex
+  align-items: center
+  gap: 0.4rem
+  margin-bottom: 0.75rem
+
+.languageDot
+  width: 10px
+  height: 10px
+  border-radius: 50%
+  flex-shrink: 0
+
+.language
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.75rem
+  color: $muted
+
+.privateBadge
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.65rem
+  color: $muted
+  padding: 0.1rem 0.4rem
+  border: 1px solid $border
+  border-radius: $radius-sm
+  margin-left: auto
+
+.projectName
+  font-size: 1.1rem
+  font-weight: 600
+  color: $text
+  margin-bottom: 0.5rem
+
+.projectDesc
+  font-size: 0.85rem
+  color: $muted
+  line-height: 1.5
+  flex: 1
+  +truncate-lines(3)
+
+.techTags
+  display: flex
+  flex-wrap: wrap
+  gap: 0.35rem
+  margin-top: 1rem
+
+.tag
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.65rem
+  color: $muted
+  padding: 0.15rem 0.45rem
+  border: 1px solid $border
+  border-radius: $radius-sm
+
+.tagHighlight
+  color: $primary
+  border-color: rgba($primary, 0.35)
+  background: rgba($primary, 0.08)
+
+.cardFooter
+  display: flex
+  gap: 1rem
+  margin-top: 1rem
+  padding-top: 0.75rem
+  border-top: 1px solid $border
+
+.repoLink
+  display: inline-flex
+  align-items: center
+  gap: 0.35rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  color: $muted
+  text-decoration: none
+  transition: color $transition-fast
+  cursor: pointer
+  &:hover
+    color: $primary
+
+.othersTitle
+  font-size: 1rem
+  color: $muted
+  margin-bottom: 1.25rem
+  font-weight: 500
+
+.otherGrid
+  display: grid
+  grid-template-columns: 1fr
+  gap: 1rem
+  margin-bottom: 2.5rem
+  +respond-to($bp-tablet)
+    grid-template-columns: repeat(2, 1fr)
+  +respond-to($bp-desktop)
+    grid-template-columns: repeat(3, 1fr)
+
+.otherCard
+  +terminal-border
+  display: block
+  padding: 1.25rem
+  text-decoration: none
+  transition: border-color $transition-base, box-shadow $transition-base
+  cursor: pointer
+  &:hover
+    +glow-border($primary)
+
+.otherHeader
+  display: flex
+  align-items: center
+  gap: 0.4rem
+  margin-bottom: 0.5rem
+
+.otherName
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.9rem
+  font-weight: 600
+  color: $text
+
+.otherDesc
+  font-size: 0.8rem
+  color: $muted
+  line-height: 1.4
+  +truncate-lines(2)
+
+.viewAll
+  text-align: center
+
+.viewAllLink
+  display: inline-flex
+  align-items: center
+  gap: 0.4rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: $primary
+  text-decoration: none
+  padding: 0.5rem 1rem
+  border: 1px solid rgba($primary, 0.25)
+  border-radius: $radius-md
+  transition: all $transition-base
+  cursor: pointer
+  &:hover
+    background: rgba($primary, 0.08)
+    border-color: rgba($primary, 0.4)

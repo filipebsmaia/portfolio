@@ -1,0 +1,109 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.header
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 50
+  padding: 0.75rem 0
+  transition: background $transition-base, border-color $transition-base, backdrop-filter $transition-base
+
+.scrolled
+  background: rgba($bg, 0.85)
+  backdrop-filter: blur(12px)
+  border-bottom: 1px solid $border
+
+.container
+  +container
+  +flex-between
+
+.logo
+  display: flex
+  align-items: center
+  gap: 0.35rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 1.1rem
+  font-weight: 600
+  color: $text
+  text-decoration: none
+  transition: color $transition-fast
+  &:hover
+    color: $primary
+
+.logoPrompt
+  color: $primary
+
+.logoText
+  color: $text
+
+.nav
+  +respond-to($bp-tablet)
+    display: block
+
+.navList
+  display: none
+  list-style: none
+  gap: 0.25rem
+  +respond-to($bp-tablet)
+    display: flex
+    gap: 0.5rem
+
+.navLink
+  display: block
+  padding: 0.4rem 0.75rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  color: $muted
+  text-decoration: none
+  border-radius: $radius-sm
+  transition: color $transition-fast, background $transition-fast
+  cursor: pointer
+  &:hover
+    color: $text
+    background: rgba($border, 0.5)
+
+.active
+  color: $primary
+  background: rgba($primary, 0.08)
+  &:hover
+    color: $primary
+
+// Mobile menu
+.navOpen
+  .navList
+    display: flex
+    flex-direction: column
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    width: min(300px, 80vw)
+    padding: 5rem 2rem 2rem
+    background: $surface
+    border-left: 1px solid $border
+    gap: 0.25rem
+    z-index: 49
+
+  .navLink
+    font-size: 1rem
+    padding: 0.75rem 1rem
+
+.menuToggle
+  display: flex
+  align-items: center
+  justify-content: center
+  background: none
+  border: 1px solid $border
+  border-radius: $radius-sm
+  padding: 0.4rem
+  color: $text
+  cursor: pointer
+  transition: border-color $transition-fast, color $transition-fast
+  z-index: 51
+  &:hover
+    border-color: $primary
+    color: $primary
+  +respond-to($bp-tablet)
+    display: none

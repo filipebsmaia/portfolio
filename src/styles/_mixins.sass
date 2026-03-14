@@ -1,0 +1,48 @@
+@use 'variables' as *
+
+=respond-to($bp)
+  @media (min-width: $bp)
+    @content
+
+=terminal-border
+  border: 1px solid $border
+  border-radius: $radius-md
+  background: $surface
+
+=glow($color: $primary)
+  box-shadow: 0 0 20px rgba($color, 0.15), 0 0 60px rgba($color, 0.05)
+
+=glow-border($color: $primary)
+  border-color: rgba($color, 0.5)
+  box-shadow: 0 0 15px rgba($color, 0.1), inset 0 0 15px rgba($color, 0.05)
+
+=flex-center
+  display: flex
+  align-items: center
+  justify-content: center
+
+=flex-between
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+=container
+  width: 100%
+  max-width: $container-max-width
+  margin: 0 auto
+  padding: 0 $section-padding-x
+  +respond-to($bp-tablet)
+    padding: 0 2rem
+  +respond-to($bp-wide)
+    padding: 0 3rem
+
+=section-padding
+  padding: $section-padding-y 0
+  +respond-to($bp-tablet)
+    padding: 7rem 0
+
+=truncate-lines($lines: 3)
+  display: -webkit-box
+  -webkit-line-clamp: $lines
+  -webkit-box-orient: vertical
+  overflow: hidden

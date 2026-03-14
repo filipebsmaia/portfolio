@@ -1,0 +1,129 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.experience
+  +section-padding
+
+.container
+  +container
+
+.gitCommand
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: $muted
+  margin-bottom: 2rem
+
+.timeline
+  position: relative
+  padding-left: 1.5rem
+  &::before
+    content: ''
+    position: absolute
+    left: 4px
+    top: 8px
+    bottom: 8px
+    width: 2px
+    background: $border
+
+.entry
+  position: relative
+  margin-bottom: 2.5rem
+  &:first-child
+    margin-top: 2rem
+  &:last-child
+    margin-bottom: 0
+
+.commitLine
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  flex-wrap: wrap
+  margin-bottom: 0.75rem
+
+.dot
+  position: absolute
+  left: -1.5rem
+  top: 6px
+  width: 10px
+  height: 10px
+  border-radius: 50%
+  background: $surface
+  border: 2px solid $primary
+  transform: translateX(-0.5px)
+
+.hash
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  color: $secondary
+
+.role
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 1rem
+  font-weight: 600
+  color: $text
+
+.separator
+  color: $muted
+  font-size: 0.85rem
+
+.company
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.9rem
+  color: $primary
+
+.entryBody
+  padding-left: 0
+
+.period
+  display: inline-block
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.75rem
+  color: $muted
+  margin-bottom: 0.5rem
+  padding: 0.15rem 0.5rem
+  border: 1px solid $border
+  border-radius: $radius-sm
+
+.description
+  font-size: 0.9rem
+  color: $text
+  line-height: 1.6
+  margin-bottom: 1rem
+  max-width: 600px
+
+.highlights
+  list-style: none
+  margin-bottom: 1rem
+  max-width: 650px
+
+.highlightItem
+  font-size: 0.85rem
+  color: $muted
+  line-height: 1.55
+  padding-left: 1rem
+  margin-bottom: 0.4rem
+  position: relative
+  &::before
+    content: '>'
+    position: absolute
+    left: 0
+    color: $primary
+    font-family: var(--font-jetbrains-mono), monospace
+    font-size: 0.8rem
+
+.technologies
+  display: flex
+  flex-wrap: wrap
+  gap: 0.4rem
+
+.techTag
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.7rem
+  color: $muted
+  padding: 0.2rem 0.5rem
+  border: 1px solid $border
+  border-radius: $radius-sm
+  transition: border-color $transition-fast, color $transition-fast
+  &:hover
+    border-color: rgba($primary, 0.3)
+    color: $text

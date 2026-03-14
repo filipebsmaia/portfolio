@@ -1,0 +1,51 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.card
+  +terminal-border
+  overflow: hidden
+  display: flex
+  flex-direction: column
+  height: 100%
+  transition: border-color $transition-base, box-shadow $transition-base
+  &:hover
+    +glow-border($primary)
+
+.titleBar
+  display: flex
+  align-items: center
+  gap: 0.75rem
+  padding: 0.65rem 1rem
+  background: rgba($border, 0.3)
+  border-bottom: 1px solid $border
+
+.dots
+  display: flex
+  gap: 0.4rem
+
+.dot
+  width: 10px
+  height: 10px
+  border-radius: 50%
+  &[data-color="red"]
+    background: #EF4444
+  &[data-color="yellow"]
+    background: #EAB308
+  &[data-color="green"]
+    background: #22C55E
+
+.fileName
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.75rem
+  color: $muted
+
+.spacer
+  flex: 1
+
+.content
+  padding: 1.25rem
+  flex: 1
+  display: flex
+  flex-direction: column
+  @media (min-width: $bp-tablet)
+    padding: 1.5rem
