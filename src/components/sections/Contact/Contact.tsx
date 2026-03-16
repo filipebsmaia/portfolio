@@ -31,14 +31,6 @@ export function Contact({ data }: ContactProps) {
                 <p className={styles.command}>$ cat contact.json</p>
                 <div className={styles.json}>
                   <span className={styles.brace}>{'{'}</span>
-                  <div className={styles.jsonLine}>
-                    <span className={styles.key}>&quot;email&quot;</span>
-                    <span className={styles.punctuation}>: </span>
-                    <a href={`mailto:${data.email}`} className={styles.value}>
-                      &quot;{data.email}&quot;
-                    </a>
-                    <span className={styles.punctuation}>,</span>
-                  </div>
                   {data.socialLinks.map((link, i) => (
                     <div key={link.platform} className={styles.jsonLine}>
                       <span className={styles.key}>&quot;{link.platform.toLowerCase()}&quot;</span>

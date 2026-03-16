@@ -16,9 +16,11 @@
   color: $primary
 
 .categories
-  display: flex
-  flex-direction: column
+  display: grid
+  grid-template-columns: 1fr
   gap: 1.5rem
+  +respond-to($bp-tablet)
+    grid-template-columns: 1fr 1fr
 
 .category
   margin-bottom: 0.5rem

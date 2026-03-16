@@ -4,11 +4,11 @@ import type { PortfolioData } from '@/types';
 
 export const portfolio: PortfolioData = {
   nav: [
-    { label: 'About', href: '#about', fileName: 'about.md' },
-    { label: 'Skills', href: '#skills', fileName: 'skills.json' },
-    { label: 'Experience', href: '#experience', fileName: 'experience.git' },
-    { label: 'Projects', href: '#projects', fileName: 'projects/' },
-    { label: 'Contact', href: '#contact', fileName: 'contact.exe' },
+    { label: 'About', href: '/#about', fileName: 'about.md' },
+    { label: 'Skills', href: '/#skills', fileName: 'skills.json' },
+    { label: 'Experience', href: '/#experience', fileName: 'experience.git' },
+    { label: 'Projects', href: '/#projects', fileName: 'projects/' },
+    { label: 'Contact', href: '/#contact', fileName: 'contact.exe' },
   ],
 
   hero: {

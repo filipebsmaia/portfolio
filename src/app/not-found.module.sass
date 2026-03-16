@@ -1,0 +1,90 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.container
+  display: flex
+  align-items: center
+  justify-content: center
+  min-height: 80vh
+  padding: 2rem
+
+.terminal
+  +terminal-border
+  max-width: 640px
+  width: 100%
+
+.header
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  padding: 0.75rem 1rem
+  border-bottom: 1px solid $border
+  background: rgba($surface, 0.8)
+
+.dot
+  width: 10px
+  height: 10px
+  border-radius: 50%
+  background: $border
+  &:first-child
+    background: #ff5f57
+  &:nth-child(2)
+    background: #febc2e
+  &:nth-child(3)
+    background: #28c840
+
+.title
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.75rem
+  color: $muted
+  margin-left: 0.5rem
+
+.body
+  padding: 1.5rem
+  display: flex
+  flex-direction: column
+  gap: 0.4rem
+
+.line
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: $text
+
+.prompt
+  color: $primary
+  margin-right: 0.5rem
+
+.error
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: #ef4444
+
+.output
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: $muted
+
+.link
+  color: $secondary
+  text-decoration: none
+  border-bottom: 1px dashed $secondary
+  transition: color $transition-fast
+  &:hover
+    color: $primary
+
+.cursor
+  color: $primary
+  animation: blink 1s step-end infinite
+
+.hint
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.7rem
+  color: $muted
+  margin-top: 1rem
+  opacity: 0.6
+
+@keyframes blink
+  0%, 100%
+    opacity: 1
+  50%
+    opacity: 0

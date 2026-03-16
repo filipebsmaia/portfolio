@@ -63,7 +63,7 @@ export function Header({ navItems }: HeaderProps) {
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
-        <a href="#" className={styles.logo}>
+        <a href="/" className={styles.logo}>
           <span className={styles.logoPrompt}>&gt;_</span>
           <span className={styles.logoText}>filipebsmaia.dev</span>
         </a>
