@@ -21,12 +21,12 @@ export function Contact({ data }: ContactProps) {
     <section id="contact" className={styles.contact}>
       <div className={styles.container}>
         <ScrollReveal>
-          <SectionHeader fileName="contact.exe" title="Contact" />
+          <SectionHeader fileName="contact.sh" title="Contact" />
         </ScrollReveal>
 
         <div className={styles.layout}>
           <ScrollReveal delay={100}>
-            <TerminalCard title="contact.exe">
+            <TerminalCard title="contact.sh">
               <div className={styles.terminal}>
                 <p className={styles.command}>$ cat contact.json</p>
                 <div className={styles.json}>

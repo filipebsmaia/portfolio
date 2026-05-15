@@ -8,7 +8,7 @@ export const portfolio: PortfolioData = {
     { label: 'Skills', href: '/#skills', fileName: 'skills.json' },
     { label: 'Experience', href: '/#experience', fileName: 'experience.git' },
     { label: 'Projects', href: '/#projects', fileName: 'projects/' },
-    { label: 'Contact', href: '/#contact', fileName: 'contact.exe' },
+    { label: 'Contact', href: '/#contact', fileName: 'contact.sh' },
   ],
 
   hero: {
@@ -241,6 +241,8 @@ export const portfolio: PortfolioData = {
         description:
           'Cross-squad engineering support, building solutions and participating in architectural decisions and migrations to improve developer experience across teams.',
         highlights: [
+          'Designed and shipped internal AI skills and agents that automate repetitive engineering workflows, freeing developers to focus on higher-value work.',
+          'Defined adoption patterns and best practices for AI-assisted development across squads.',
           'Introduced architectural patterns such as Strategy, Specification, Policy, Saga, etc., ensuring responsibility isolation and improving service maintainability.',
           'Integrated OpenTelemetry across microservices for improved observability, and built dashboards for clear system visualization.',
           'Participated in defining and adapting GMUD (change management) processes for the team.',
@@ -256,6 +258,8 @@ export const portfolio: PortfolioData = {
           'Docker',
           'Kafka',
           'PostgreSQL',
+          'Claude',
+          'AI Agents',
         ],
       },
       {
