@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Button.module.sass';
 
 interface ButtonProps {
@@ -8,11 +9,29 @@ interface ButtonProps {
 }
 
 export function Button({ children, href, variant = 'primary', external }: ButtonProps) {
-  const externalProps = external ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
+  const className = `${styles.button} ${styles[variant]}`;
 
+  if (external) {
+    return (
+      <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    );
+  }
+
+  // A bare hash is a same-document anchor; next/link adds nothing there.
+  if (href.startsWith('#')) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  // Internal navigation: was a plain <a>, so every in-app Button was a full page load.
   return (
-    <a href={href} className={`${styles.button} ${styles[variant]}`} {...externalProps}>
+    <Link href={href} className={className}>
       {children}
-    </a>
+    </Link>
   );
 }

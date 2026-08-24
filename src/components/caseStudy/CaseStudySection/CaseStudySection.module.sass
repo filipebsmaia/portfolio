@@ -1,0 +1,18 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.section
+  padding: 3.5rem 0
+  +respond-to($bp-tablet)
+    padding: 4.5rem 0
+
+.container
+  +container
+  scroll-margin-top: 5rem
+
+.intro
+  font-size: 0.95rem
+  line-height: 1.7
+  color: $muted
+  max-width: 68ch
+  margin-top: -1.25rem

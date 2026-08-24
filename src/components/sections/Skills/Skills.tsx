@@ -1,11 +1,9 @@
 import { SectionHeader } from '@/components/shared/SectionHeader/SectionHeader';
 import { ScrollReveal } from '@/components/shared/ScrollReveal/ScrollReveal';
-import type { SkillsData, SkillProficiency } from '@/types';
+import type { Locale } from '@/i18n/config';
+import { skillCategories, type SkillProficiency } from './Skills.data';
+import { skillsMessages } from './Skills.messages';
 import styles from './Skills.module.sass';
-
-interface SkillsProps {
-  data: SkillsData;
-}
 
 function ProficiencyBar({ level }: { level: SkillProficiency }) {
   const bars: Record<SkillProficiency, number> = {
@@ -28,27 +26,28 @@ function pad(str: string, length: number) {
   return str + ' '.repeat(Math.max(0, length - str.length));
 }
 
-export function Skills({ data }: SkillsProps) {
+export function Skills({ locale }: { locale: Locale }) {
+  const t = skillsMessages[locale];
   let globalIndex = 0;
 
   return (
     <section id="skills" className={styles.skills}>
       <div className={styles.container}>
         <ScrollReveal>
-          <SectionHeader fileName="skills.json" title="Skills" />
+          <SectionHeader fileName="skills.json" title={t.sectionTitle} />
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
           <div className={styles.loadingHeader}>
-            <span className={styles.prompt}>&gt; Loading modules...</span>
+            <span className={styles.prompt}>{t.loadingHeader}</span>
           </div>
         </ScrollReveal>
 
         <div className={styles.categories}>
-          {data.categories.map((category) => (
+          {skillCategories.map((category) => (
             <div key={category.id} className={styles.category}>
               <ScrollReveal delay={150 + globalIndex * 30}>
-                <p className={styles.categoryLabel}>[{category.label.toLowerCase()}]</p>
+                <p className={styles.categoryLabel}>[{t.categories[category.id].toLowerCase()}]</p>
               </ScrollReveal>
               <div className={styles.skillsList}>
                 {category.skills.map((skill) => {
@@ -57,10 +56,10 @@ export function Skills({ data }: SkillsProps) {
                   return (
                     <ScrollReveal key={skill.name} delay={delay}>
                       <div className={styles.skillLine}>
-                        <span className={styles.loaded}>loaded</span>
+                        <span className={styles.loaded}>{t.loadedLabel}</span>
                         <span className={styles.moduleName}>{pad(moduleName, 28)}</span>
                         <ProficiencyBar level={skill.proficiency} />
-                        <span className={styles.level}>{skill.proficiency}</span>
+                        <span className={styles.level}>{t.proficiency[skill.proficiency]}</span>
                       </div>
                     </ScrollReveal>
                   );

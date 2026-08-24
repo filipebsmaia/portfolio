@@ -1,0 +1,52 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.grid
+  display: grid
+  grid-template-columns: 1fr
+  gap: 1rem
+  +respond-to($bp-mobile)
+    grid-template-columns: repeat(2, 1fr)
+  +respond-to($bp-desktop)
+    grid-template-columns: repeat(4, 1fr)
+
+.card
+  +terminal-border
+  display: flex
+  align-items: flex-start
+  gap: 1rem
+  padding: 1.25rem
+  transition: border-color $transition-base
+  &:hover
+    border-color: rgba($primary, 0.3)
+
+.icon
+  color: $primary
+  flex-shrink: 0
+  margin-top: 0.15rem
+
+.value
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 1.35rem
+  font-weight: 600
+  color: $text
+  line-height: 1.2
+
+.label
+  font-size: 0.8rem
+  color: $muted
+  margin-top: 0.15rem
+
+.detail
+  font-size: 0.72rem
+  color: $muted
+  opacity: 0.75
+  line-height: 1.45
+  margin-top: 0.4rem
+
+.asOf
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.72rem
+  color: $muted
+  opacity: 0.75
+  margin-top: 1rem

@@ -1,18 +1,27 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import type { NavItem } from '@/types';
+import type { Locale } from '@/i18n/config';
+import { localizedPath, splitLocale } from '@/i18n/navigation';
+import type { NavItem } from './Header.messages';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import styles from './Header.module.sass';
 
 interface HeaderProps {
-  navItems: NavItem[];
+  navItems: readonly NavItem[];
+  locale: Locale;
 }
 
-export function Header({ navItems }: HeaderProps) {
+export function Header({ navItems, locale }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  // Locale-stripped, so the scroll-spy works on /pt-br as well as /.
+  const { path } = splitLocale(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +32,12 @@ export function Header({ navItems }: HeaderProps) {
   }, []);
 
   useEffect(() => {
-    const sections = navItems.map((item) => item.href.replace('#', ''));
+    if (path !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const sections = navItems.map((item) => item.href.split('#')[1]).filter(Boolean);
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -43,7 +57,7 @@ export function Header({ navItems }: HeaderProps) {
     }
 
     return () => observer.disconnect();
-  }, [navItems]);
+  }, [navItems, path]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -63,25 +77,28 @@ export function Header({ navItems }: HeaderProps) {
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
-        <a href="/" className={styles.logo}>
+        <Link href={localizedPath(locale, '/')} className={styles.logo}>
           <span className={styles.logoPrompt}>&gt;_</span>
           <span className={styles.logoText}>filipebsmaia.dev</span>
-        </a>
+        </Link>
 
         <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`} aria-label="Main navigation">
           <ul className={styles.navList}>
             {navItems.map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
-                  className={`${styles.navLink} ${activeSection === item.href.replace('#', '') ? styles.active : ''}`}
+                <Link
+                  href={localizedPath(locale, item.href)}
+                  className={`${styles.navLink} ${activeSection === item.href.split('#')[1] ? styles.active : ''}`}
                   onClick={handleNavClick}
-                  aria-current={activeSection === item.href.replace('#', '') ? 'true' : undefined}
+                  aria-current={activeSection === item.href.split('#')[1] ? 'true' : undefined}
                 >
                   {item.fileName}
-                </a>
+                </Link>
               </li>
             ))}
+            <li className={styles.langItem}>
+              <LanguageSwitcher onNavigate={handleNavClick} />
+            </li>
           </ul>
         </nav>
 

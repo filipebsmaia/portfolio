@@ -1,0 +1,36 @@
+@use '@/styles/variables' as *
+
+// Mirrors .navLink / .active in Header.module.sass so it reads as part of the nav.
+
+.switcher
+  display: flex
+  align-items: center
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.8rem
+  line-height: 1
+
+.slot
+  display: flex
+  align-items: center
+
+.separator
+  color: $border
+  padding: 0 0.15rem
+  user-select: none
+
+.option
+  display: block
+  padding: 0.4rem 0.5rem
+  color: $muted
+  text-decoration: none
+  border-radius: $radius-sm
+  transition: color $transition-fast, background $transition-fast
+  &:hover
+    color: $text
+    background: rgba($border, 0.5)
+
+.active
+  color: $primary
+  background: rgba($primary, 0.08)
+  &:hover
+    color: $primary

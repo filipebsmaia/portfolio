@@ -1,0 +1,38 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+.list
+  list-style: none
+  max-width: 68ch
+
+.item
+  position: relative
+  font-size: 0.875rem
+  line-height: 1.65
+  color: $muted
+  padding-left: 1.1rem
+  margin-bottom: 0.7rem
+  &:last-child
+    margin-bottom: 0
+  &::before
+    content: '>'
+    position: absolute
+    left: 0
+    top: 0
+    color: $primary
+    font-family: var(--font-jetbrains-mono), monospace
+    font-size: 0.8rem
+  code
+    font-family: var(--font-jetbrains-mono), monospace
+    font-size: 0.85em
+    color: $text
+    padding: 0.05rem 0.3rem
+    border: 1px solid $border
+    border-radius: $radius-sm
+    background: rgba($surface-light, 0.7)
+
+.plain
+  .item
+    color: $text
+    &::before
+      content: '·'

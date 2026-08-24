@@ -3,53 +3,57 @@ import { SectionHeader } from '@/components/shared/SectionHeader/SectionHeader';
 import { TerminalCard } from '@/components/shared/TerminalCard/TerminalCard';
 import { ScrollReveal } from '@/components/shared/ScrollReveal/ScrollReveal';
 import { Button } from '@/components/shared/Button/Button';
-import type { ContactData } from '@/types';
+import type { Locale } from '@/i18n/config';
+import { profile, type SocialId } from '@/lib/profile';
+import { contactMessages } from './Contact.messages';
 import styles from './Contact.module.sass';
 
 interface ContactProps {
-  data: ContactData;
+  locale: Locale;
 }
 
-const iconMap: Record<string, React.ReactNode> = {
-  Github: <Github size={18} />,
-  Linkedin: <Linkedin size={18} />,
-  Mail: <Mail size={18} />,
+const iconMap: Record<SocialId, React.ReactNode> = {
+  github: <Github size={18} />,
+  linkedin: <Linkedin size={18} />,
+  email: <Mail size={18} />,
 };
 
-export function Contact({ data }: ContactProps) {
+export function Contact({ locale }: ContactProps) {
+  const t = contactMessages[locale];
+
   return (
     <section id="contact" className={styles.contact}>
       <div className={styles.container}>
         <ScrollReveal>
-          <SectionHeader fileName="contact.sh" title="Contact" />
+          <SectionHeader fileName="contact.sh" title={t.sectionTitle} />
         </ScrollReveal>
 
         <div className={styles.layout}>
           <ScrollReveal delay={100}>
             <TerminalCard title="contact.sh">
               <div className={styles.terminal}>
-                <p className={styles.command}>$ cat contact.json</p>
+                <p className={styles.command}>{t.command}</p>
                 <div className={styles.json}>
                   <span className={styles.brace}>{'{'}</span>
-                  {data.socialLinks.map((link, i) => (
-                    <div key={link.platform} className={styles.jsonLine}>
-                      <span className={styles.key}>&quot;{link.platform.toLowerCase()}&quot;</span>
+                  {profile.socialLinks.map((link, i) => (
+                    <div key={link.id} className={styles.jsonLine}>
+                      <span className={styles.key}>&quot;{link.id}&quot;</span>
                       <span className={styles.punctuation}>: </span>
                       <a
                         href={link.url}
-                        target={link.platform !== 'Email' ? '_blank' : undefined}
-                        rel={link.platform !== 'Email' ? 'noopener noreferrer' : undefined}
+                        target={link.id !== 'email' ? '_blank' : undefined}
+                        rel={link.id !== 'email' ? 'noopener noreferrer' : undefined}
                         className={styles.value}
                       >
                         &quot;{link.username}&quot;
                       </a>
-                      {i < data.socialLinks.length - 1 && <span className={styles.punctuation}>,</span>}
+                      {i < profile.socialLinks.length - 1 && <span className={styles.punctuation}>,</span>}
                     </div>
                   ))}
                   <div className={styles.jsonLine}>
-                    <span className={styles.key}>&quot;status&quot;</span>
+                    <span className={styles.key}>&quot;{t.statusKey}&quot;</span>
                     <span className={styles.punctuation}>: </span>
-                    <span className={styles.valueString}>&quot;{data.availability}&quot;</span>
+                    <span className={styles.valueString}>&quot;{t.availability}&quot;</span>
                   </div>
                   <span className={styles.brace}>{'}'}</span>
                 </div>
@@ -59,23 +63,23 @@ export function Contact({ data }: ContactProps) {
 
           <ScrollReveal delay={200}>
             <div className={styles.cta}>
-              <p className={styles.ctaPrompt}>$ send-message --to filipe</p>
-              <p className={styles.ctaText}>Have a project in mind or want to chat? Feel free to reach out.</p>
-              <Button href={data.linkedinUrl} variant="primary" external>
+              <p className={styles.ctaPrompt}>{t.ctaPrompt}</p>
+              <p className={styles.ctaText}>{t.ctaText}</p>
+              <Button href={profile.linkedinUrl} variant="primary" external>
                 <Send size={16} />
-                Get In Touch
+                {t.ctaButton}
               </Button>
               <div className={styles.socialRow}>
-                {data.socialLinks.map((link) => (
+                {profile.socialLinks.map((link) => (
                   <a
-                    key={link.platform}
+                    key={link.id}
                     href={link.url}
-                    target={link.platform !== 'Email' ? '_blank' : undefined}
-                    rel={link.platform !== 'Email' ? 'noopener noreferrer' : undefined}
+                    target={link.id !== 'email' ? '_blank' : undefined}
+                    rel={link.id !== 'email' ? 'noopener noreferrer' : undefined}
                     className={styles.socialLink}
-                    aria-label={link.platform}
+                    aria-label={t.social[link.id]}
                   >
-                    {iconMap[link.icon]}
+                    {iconMap[link.id]}
                   </a>
                 ))}
               </div>

@@ -1,0 +1,65 @@
+@use '@/styles/variables' as *
+@use '@/styles/mixins' as *
+
+// Card internals live in ProjectCard.module.sass.
+
+.page
+  padding-top: 5.5rem
+  padding-bottom: 5rem
+  +respond-to($bp-tablet)
+    padding-top: 6.5rem
+
+.container
+  +container
+
+.breadcrumb
+  display: flex
+  align-items: center
+  gap: 0.4rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.75rem
+  color: $muted
+  margin-bottom: 1.5rem
+
+.breadcrumbLink
+  color: $muted
+  text-decoration: none
+  transition: color $transition-fast
+  &:hover
+    color: $primary
+
+.breadcrumbCurrent
+  color: $text
+
+.grid
+  display: grid
+  grid-template-columns: 1fr
+  gap: 1.5rem
+  margin-bottom: 3rem
+  +respond-to($bp-tablet)
+    grid-template-columns: repeat(2, 1fr)
+  +respond-to($bp-desktop)
+    grid-template-columns: repeat(3, 1fr)
+
+.gridItem
+  height: 100%
+
+.viewAll
+  text-align: center
+
+.viewAllLink
+  display: inline-flex
+  align-items: center
+  gap: 0.4rem
+  font-family: var(--font-jetbrains-mono), monospace
+  font-size: 0.85rem
+  color: $primary
+  text-decoration: none
+  padding: 0.5rem 1rem
+  border: 1px solid rgba($primary, 0.25)
+  border-radius: $radius-md
+  transition: all $transition-base
+  cursor: pointer
+  &:hover
+    background: rgba($primary, 0.08)
+    border-color: rgba($primary, 0.4)

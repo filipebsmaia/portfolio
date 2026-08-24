@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Filipe Maia — Software Engineer',
+    name: 'Filipe Maia - Software Engineer',
     short_name: 'Filipe Maia',
     description:
       'Fullstack developer passionate about TypeScript, Java, React, Node.js, Clean Architecture, and Domain-Driven Design.',

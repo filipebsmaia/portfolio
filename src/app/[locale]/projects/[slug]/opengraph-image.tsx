@@ -1,11 +1,29 @@
 import { ImageResponse } from 'next/og';
+import { caseStudySlugs, getCaseStudy } from './content';
+import { defaultLocale, localeFromSegment, locales, segmentFor } from '@/i18n/config';
 
-export const runtime = 'edge';
-export const alt = 'Filipe Maia — Software Engineer';
+export const alt = 'Project case study - Filipe Maia';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default function OpengraphImage() {
+// Image routes are app *route* modules: generateStaticParams attaches to the last
+// segment only and does NOT inherit the parent's params, so the product is explicit.
+export function generateStaticParams() {
+  return locales.flatMap((locale) => caseStudySlugs.map((slug) => ({ locale: segmentFor(locale), slug })));
+}
+
+export default async function OpengraphImage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale: segment, slug } = await params;
+  const study = getCaseStudy(slug, localeFromSegment(segment) ?? defaultLocale);
+
+  const name = study?.name ?? 'Projects';
+  const tagline = study?.tagline ?? 'Case studies from filipemaia.dev';
+  const stackLine =
+    study?.stack
+      .flatMap((group) => group.items)
+      .slice(0, 5)
+      .join(' · ') ?? '';
+
   return new ImageResponse(
     <div
       style={{
@@ -33,6 +51,7 @@ export default function OpengraphImage() {
           display: 'flex',
         }}
       />
+
       <div
         style={{
           display: 'flex',
@@ -61,39 +80,26 @@ export default function OpengraphImage() {
         <span style={{ color: '#94A3B8' }}>filipemaia.dev</span>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'relative' }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '14px',
-            fontSize: '24px',
-            color: '#00FFAA',
-          }}
-        >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '24px', color: '#00FFAA' }}>
           <span style={{ color: '#94A3B8' }}>$</span>
-          <span>whoami</span>
+          <span>cat projects/{slug}.md</span>
         </div>
         <div
           style={{
-            fontSize: '110px',
+            fontSize: '104px',
             fontWeight: 700,
             color: '#E2E8F0',
             lineHeight: 1.05,
             letterSpacing: '-2px',
           }}
         >
-          Filipe Maia
+          {name}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', fontSize: '36px' }}>
-          <span style={{ color: '#00FFAA' }}>{'>'}</span>
-          <span style={{ color: '#E2E8F0' }}>Software Engineer</span>
-          <span style={{ color: '#1E293B' }}>·</span>
-          <span style={{ color: '#94A3B8' }}>Fullstack</span>
+        <div style={{ display: 'flex', fontSize: '30px', color: '#94A3B8', lineHeight: 1.35, maxWidth: '900px' }}>
+          {tagline}
         </div>
-        <div style={{ fontSize: '28px', color: '#94A3B8', marginTop: '8px' }}>
-          TypeScript · React · Node.js · Clean Architecture · DDD
-        </div>
+        <div style={{ display: 'flex', fontSize: '26px', color: '#00FFAA', marginTop: '4px' }}>{stackLine}</div>
       </div>
 
       <div
@@ -109,8 +115,6 @@ export default function OpengraphImage() {
         <span>github.com/filipebsmaia</span>
       </div>
     </div>,
-    {
-      ...size,
-    },
+    { ...size },
   );
 }
