@@ -36,6 +36,9 @@ export const ceuGgFacts = {
     'Minecraft hosting',
     'bare metal',
     'observability',
+    'AI agent',
+    'tool calling',
+    'LLM',
   ],
 
   /**
@@ -58,6 +61,8 @@ export const ceuGgFacts = {
     machinesBahia: 2,
     machinesActive: 4,
     machinesSpare: 1,
+    /** 15 account tools, plus search_help, escalate_to_human and report_inappropriate. */
+    skyTools: 18,
   },
 
   /** The month the stats above were read from the ceu.gg metrics API. */
@@ -80,9 +85,20 @@ export const ceuGgFacts = {
     archive: 'archive',
   },
 
+  /**
+   * `tools` is `sky-tools-block` and not `sky-tools` because the deep dive below
+   * already owns that id: `DeepDive` renders one on its wrapper.
+   */
+  skyBlocks: {
+    chat: 'sky-chat',
+    tools: 'sky-tools-block',
+    investigation: 'sky-investigation',
+  },
+
   deepDives: {
     coldStorage: { id: 'cold-storage', fileName: 'cold-storage.md' },
     scheduling: { id: 'scheduling', fileName: 'scheduling.md' },
+    skyTools: { id: 'sky-tools', fileName: 'sky-tools.md' },
     skyDiagnostics: { id: 'sky-diagnostics', fileName: 'sky-diagnostics.md' },
   },
 
@@ -110,13 +126,18 @@ export const ceuGgFacts = {
     v200: { version: 'v2.0.0', month: 8, year: 2026, current: true },
   },
 
+  /**
+   * `frontend` stays first: the OG image renders the first five items of the
+   * flattened list, so reordering the groups rewrites the social card.
+   */
   stack: {
     frontend: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Radix'],
-    backend: ['NestJS 11', 'TypeScript', 'DDD', 'CQRS', 'Domain events', 'ABAC'],
-    data: ['PostgreSQL 16', 'Prisma', 'Kafka', 'MinIO', 'SFTP'],
-    infrastructure: ['Kubernetes (k3s)', 'Proxmox', 'Traefik', 'OpenEBS LVM', 'MikroTik', 'Cloudflare', 'Docker'],
-    observability: ['Prometheus', 'Grafana', 'OpenTelemetry', 'pino'],
-    integrations: ['Stripe', 'PIX', 'Discord.js', 'OpenAI', 'Google Drive', 'CurseForge', 'Modrinth'],
+    backend: ['NestJS 11', 'TypeScript', 'DDD', 'CQRS', 'Domain events', 'ABAC', 'Jest'],
+    data: ['PostgreSQL 16', 'Prisma', 'Kafka', 'MinIO', 'Google Cloud Storage', 'SFTP'],
+    ai: ['OpenAI', 'Tool calling', 'Server-Sent Events', 'Token and cost accounting'],
+    infrastructure: ['Kubernetes (k3s)', 'Proxmox', 'Helm', 'Traefik', 'OpenEBS LVM', 'MikroTik', 'Cloudflare', 'Docker'],
+    observability: ['Prometheus', 'Grafana', 'SigNoz', 'OpenTelemetry', 'pino'],
+    integrations: ['Stripe', 'PIX (Efí)', 'Discord.js', 'Resend', 'Google Drive', 'CurseForge', 'Modrinth'],
   },
 } as const;
 
@@ -169,6 +190,7 @@ export function statsFor(locale: Locale) {
       machinesBahia: render(figures.machinesBahia),
       machinesActive: render(figures.machinesActive),
       machinesSpare: render(figures.machinesSpare),
+      skyTools: render(figures.skyTools),
     },
 
     /** "August 2026" in en, "agosto de 2026" in pt-BR. */

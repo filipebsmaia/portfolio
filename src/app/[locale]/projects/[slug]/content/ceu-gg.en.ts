@@ -16,7 +16,8 @@ export const ceuGgEn: CaseStudy = {
     title: 'ceu.gg - Minecraft hosting infrastructure',
     description:
       'How ceu.gg runs multi-tenant Minecraft servers on self-hosted bare metal: a custom Kubernetes provisioning engine, ' +
-      'atomically-written cold storage, a scheduler that will not oversell reserved capacity, and a diagnostic agent with no write tools.',
+      'atomically-written cold storage, a scheduler that will not oversell reserved capacity, and Sky, an assistant that ' +
+      "calls tools under the user's own permissions and investigates broken servers with no write tools.",
     keywords: f.seoKeywords,
   },
 
@@ -26,6 +27,7 @@ export const ceuGgEn: CaseStudy = {
     overview: 'What it is',
     architecture: 'How it is layered',
     provisioning: 'From a button to a running world',
+    sky: 'The assistant',
     engineering: 'Problems worth writing down',
     operations: 'Running it',
     incidents: 'What broke, and what is still open',
@@ -48,6 +50,7 @@ export const ceuGgEn: CaseStudy = {
     'Creating a server allocates nothing but a database row',
     'Reserved capacity holds because the scheduler refuses to place anything else on it',
     'The diagnostic agent reads player-authored text and holds no write tools',
+    'The chat acts on your account with your permissions, never with any of its own',
   ],
 
   statsAsOf: `Platform figures read from the ceu.gg metrics API in ${s.asOf}.`,
@@ -169,8 +172,77 @@ export const ceuGgEn: CaseStudy = {
     ],
   },
 
+  sky: {
+    intro:
+      'Sky is the assistant on the platform. It answers in the panel and in Discord, and it can act on the account of ' +
+      "whoever is asking - with that person's permissions, never with any of its own.",
+    blocks: [
+      {
+        id: f.skyBlocks.chat,
+        label: '# the help chat',
+        intro:
+          'One engine answers in both places. The widget in the panel and the bot in Discord run the same service, and ' +
+          'the Next.js route in front of the widget is a proxy that pipes the reply through as it arrives.',
+        points: [
+          'Replies stream over Server-Sent Events, and the same channel carries the status line the widget shows while a ' +
+            'tool is running.',
+          'Answers come from a curated set of markdown files about the platform, searched by keyword with heading matches ' +
+            'weighted higher. There are no embeddings and no vector database; the corpus is small enough to load whole, ' +
+            'so the common question never reaches a search at all.',
+          'Every Discord channel has a mode - answer everything, answer only when mentioned, or stay out. Ticket channels ' +
+            'get a greeting, and Sky keeps quiet when the person talking is staff.',
+          'The bot runs on exactly one replica at a time, elected through a Postgres advisory lock. Losing the lock ' +
+            'disconnects the gateway and another replica takes over.',
+          'When it cannot solve something, `escalate_to_human` pings the team in that channel instead of letting the model ' +
+            'improvise an answer.',
+        ],
+      },
+      {
+        id: f.skyBlocks.tools,
+        label: '# tool calling',
+        intro:
+          `The model can call ${s.figures.skyTools} tools. None of them touch the database: each one is an HTTP call to ` +
+          "the platform's own API carrying the JWT of the person in the conversation, so a tool call is authorised the " +
+          'same way a click in the panel is.',
+        points: [
+          'Permissions come from ABAC, the same matrix the panel reads. Sky never holds a credential of its own.',
+          'Reading is open to anyone signed in: communities, servers, live status, console output, files, backups, plan ' +
+            'and balance.',
+          'Writing - editing a config file, starting or stopping a server, running a console command, creating a backup - ' +
+            'needs an active paid plan, and that check fails closed.',
+          'Nothing destructive runs on the first call. The tool returns `needsConfirmation`, Sky has to ask, and only a ' +
+            'second call with `confirmed: true` goes through.',
+          'A reply gets at most six tool rounds, and the last round is served without tools, so it has to stop ' +
+            'investigating and answer.',
+        ],
+      },
+      {
+        id: f.skyBlocks.investigation,
+        label: '# diagnostics',
+        intro:
+          'When a server will not boot, the console is a wall of English stack traces. Diagnostics is a separate loop ' +
+          'that reads the server and writes a report: what is wrong, the evidence for it, and the fixes as buttons.',
+        points: [
+          'The model gets read-only tools and eight rounds. The prompt pushes it to ask for several files in one round, ' +
+            'because rounds are the scarce thing.',
+          'It finishes by calling `submit_diagnosis`: a summary in plain Portuguese, findings marked `INFO`, `WARNING` or ' +
+            '`CRITICAL`, and proposed actions. If it never calls it, the run returns text and no actions.',
+          'Every finding has to cite something it actually read - a log line, a config value, a filename. Without that it ' +
+            'is a guess, and a guess sends the owner to change the wrong thing.',
+          'The quota belongs to the server, not to the account clicking. It comes from that server\'s hosting plan, and a ' +
+            'community with several admins would otherwise get a different limit depending on who asked.',
+          'A limit of zero also means unavailable, which is how the feature gets switched on and off for the free tier ' +
+            'from the admin panel without a deploy.',
+          'A run that passes its cost ceiling stops and returns what it has. A partial report beats an open invoice.',
+          'Tool names are rewritten into plain language before the report is stored. One real report reached a customer ' +
+            'reading `get_server retornou: "Não encontrei esse recurso"`.',
+        ],
+      },
+    ],
+  },
+
   engineering: {
-    intro: 'Three that took real work, plus a few smaller ones I keep coming back to.',
+    intro: 'Four that took real work, plus a few smaller ones I keep coming back to.',
     deepDives: [
       {
         ...f.deepDives.coldStorage,
@@ -211,6 +283,26 @@ export const ceuGgEn: CaseStudy = {
         outcome:
           'The guarantee holds by refusal, not by observation. A paid server finds its resources free because nothing else ' +
           'was allowed to take them.',
+      },
+      {
+        ...f.deepDives.skyTools,
+        title: 'Letting a model act on a real account',
+        problem:
+          'In the chat, unlike in diagnostics, Sky can start a server, rewrite a config file and run console commands. ' +
+          'The model is the one deciding when to reach for those.',
+        approach: [
+          "Tools never touch a repository. Each one is an HTTP call to the platform's own API carrying the user's JWT, so " +
+            'whether an action is allowed gets answered by the same ABAC, specifications and domain events that answer it ' +
+            'for a click in the panel.',
+          'The token is checked for expiry before the call. A dead session returns a `session_expired` payload that ' +
+            'doubles as an instruction: ask the person to sign in again, do not retry.',
+          'The paid-plan gate fails closed. If the plan lookup itself errors, the write does not happen.',
+          'Anything destructive returns `needsConfirmation` instead of running. Sky has to ask, wait for a yes, and call ' +
+            'again with `confirmed: true`.',
+        ],
+        outcome:
+          'The model picks what to attempt. It never picks what it is allowed to do. The diagnostic mode answers the ' +
+          'same question by deleting the write tools altogether, because there the input is text any player can author.',
       },
       {
         ...f.deepDives.skyDiagnostics,
@@ -350,6 +442,7 @@ export const ceuGgEn: CaseStudy = {
     { label: 'Frontend', items: f.stack.frontend },
     { label: 'Backend', items: f.stack.backend },
     { label: 'Data', items: f.stack.data },
+    { label: 'AI', items: f.stack.ai },
     { label: 'Infrastructure', items: f.stack.infrastructure },
     { label: 'Observability', items: f.stack.observability },
     { label: 'Integrations', items: f.stack.integrations },

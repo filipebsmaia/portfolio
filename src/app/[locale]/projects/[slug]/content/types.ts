@@ -40,11 +40,20 @@ export interface CaseStudyStackGroup {
   items: readonly string[];
 }
 
+/** One labelled block inside the Sky section: the chat, the tools, the diagnostics. */
+export interface CaseStudySkyBlock {
+  id: string;
+  label: string;
+  intro: string;
+  points: string[];
+}
+
 /** Section headings live in the content: they are this project's editorial voice. */
 export interface CaseStudySectionTitles {
   overview: string;
   architecture: string;
   provisioning: string;
+  sky: string;
   engineering: string;
   operations: string;
   incidents: string;
@@ -72,6 +81,7 @@ export interface CaseStudy {
   stats: StatData[];
   architecture: { intro: string; diagram: CaseStudyImage; layers: CaseStudyLayer[] };
   flow: { intro: string; steps: FlowStepData[] };
+  sky: { intro: string; blocks: CaseStudySkyBlock[] };
   engineering: { intro: string; deepDives: DeepDiveData[]; smallerFixes: CaseStudyNote[] };
   observability: { intro: string; screenshot: CaseStudyImage; covers: string[] };
   security: { intro: string; measures: string[] };

@@ -18,7 +18,8 @@ export const ceuGgPtBr: CaseStudy = {
     description:
       'Como o ceu.gg roda servidores de Minecraft multi-tenant em bare metal self-hosted: uma engine de provisionamento sobre ' +
       'Kubernetes feita em casa, cold storage escrito de forma atômica, um scheduler que se recusa a vender capacidade ' +
-      'reservada duas vezes, e um agente de diagnóstico sem nenhuma ferramenta de escrita.',
+      'reservada duas vezes, e a Sky, uma assistente que chama ferramentas com as permissões do próprio usuário e ' +
+      'investiga servidores quebrados sem nenhuma ferramenta de escrita.',
     keywords: f.seoKeywords,
   },
 
@@ -26,6 +27,7 @@ export const ceuGgPtBr: CaseStudy = {
     overview: 'O que é',
     architecture: 'As camadas',
     provisioning: 'De um botão a um mundo no ar',
+    sky: 'A assistente',
     engineering: 'Problemas que valeu a pena anotar',
     operations: 'Operando',
     incidents: 'O que quebrou e o que ainda está aberto',
@@ -49,6 +51,7 @@ export const ceuGgPtBr: CaseStudy = {
     'Criar um servidor não aloca nada além de uma linha no banco',
     'A capacidade reservada se sustenta porque o scheduler se recusa a colocar outra coisa nela',
     'O agente de diagnóstico lê texto escrito por jogadores e não tem nenhuma ferramenta de escrita',
+    'O chat age na sua conta com as suas permissões, nunca com as próprias',
   ],
 
   statsAsOf: `Números lidos da API de métricas do ceu.gg em ${s.asOf}.`,
@@ -175,8 +178,79 @@ export const ceuGgPtBr: CaseStudy = {
     ],
   },
 
+  sky: {
+    intro:
+      'A Sky é a assistente da plataforma. Ela responde no painel e no Discord, e consegue agir na conta de quem está ' +
+      'perguntando - com as permissões dessa pessoa, nunca com as próprias.',
+    blocks: [
+      {
+        id: f.skyBlocks.chat,
+        label: '# o chat de ajuda',
+        intro:
+          'Um motor só responde nos dois lugares. O widget do painel e o bot do Discord rodam o mesmo serviço, e a rota ' +
+          'do Next na frente do widget é um proxy que repassa a resposta conforme ela chega.',
+        points: [
+          'As respostas chegam em stream por Server-Sent Events, e o mesmo canal carrega a linha de status que o widget ' +
+            'mostra enquanto uma ferramenta roda.',
+          'As respostas saem de um conjunto curado de arquivos markdown sobre a plataforma, buscados por palavra-chave ' +
+            'com peso maior para o que casa no título da seção. Não há embeddings nem banco vetorial; o corpus é pequeno ' +
+            'o bastante para carregar inteiro, então a pergunta comum nem chega a uma busca.',
+          'Cada canal do Discord tem um modo - responder tudo, responder só quando mencionada, ou ficar de fora. Canais ' +
+            'de ticket ganham uma saudação, e a Sky se cala quando quem está falando é a equipe.',
+          'O bot roda em exatamente uma réplica por vez, eleita por um advisory lock do Postgres. Perder o lock ' +
+            'desconecta o gateway e outra réplica assume.',
+          'Quando não consegue resolver, o `escalate_to_human` chama a equipe naquele canal em vez de deixar o modelo ' +
+            'improvisar uma resposta.',
+        ],
+      },
+      {
+        id: f.skyBlocks.tools,
+        label: '# chamada de ferramentas',
+        intro:
+          `O modelo pode chamar ${s.figures.skyTools} ferramentas. Nenhuma delas encosta no banco: cada uma é uma ` +
+          'chamada HTTP para a API da própria plataforma levando o JWT de quem está na conversa, então uma chamada de ' +
+          'ferramenta é autorizada do mesmo jeito que um clique no painel.',
+        points: [
+          'As permissões vêm do ABAC, a mesma matriz que o painel lê. A Sky nunca tem credencial própria.',
+          'Leitura é liberada para qualquer um logado: comunidades, servidores, status ao vivo, console, arquivos, ' +
+            'backups, plano e saldo.',
+          'Escrita - editar um arquivo de configuração, ligar ou desligar um servidor, rodar um comando no console, ' +
+            'criar backup - exige plano pago ativo, e essa checagem falha fechada.',
+          'Nada destrutivo roda na primeira chamada. A ferramenta devolve `needsConfirmation`, a Sky precisa perguntar, ' +
+            'e só uma segunda chamada com `confirmed: true` passa.',
+          'Cada resposta tem no máximo seis rodadas de ferramenta, e a última rodada vai sem ferramenta nenhuma, para ' +
+            'obrigar a parar de investigar e responder.',
+        ],
+      },
+      {
+        id: f.skyBlocks.investigation,
+        label: '# diagnóstico',
+        intro:
+          'Quando um servidor não sobe, o console é uma parede de stack trace em inglês. O diagnóstico é um loop ' +
+          'separado que lê o servidor e escreve um laudo: o que está errado, a evidência disso, e as correções como ' +
+          'botões.',
+        points: [
+          'O modelo recebe ferramentas de leitura e oito rodadas. O prompt empurra ele a pedir vários arquivos na mesma ' +
+            'rodada, porque rodada é o que falta.',
+          'Ele termina chamando `submit_diagnosis`: um resumo em português, achados marcados como `INFO`, `WARNING` ou ' +
+            '`CRITICAL`, e ações propostas. Se ele não chamar, a execução devolve texto e nenhuma ação.',
+          'Todo achado precisa citar algo que ele leu de fato - uma linha de log, um valor de config, um nome de ' +
+            'arquivo. Sem isso é chute, e chute faz o dono do servidor mexer no lugar errado.',
+          'A cota é do servidor, não da conta que clicou. Ela sai do plano de hospedagem daquele servidor, e uma ' +
+            'comunidade com vários administradores teria limites diferentes dependendo de quem pedisse.',
+          'Limite zero também quer dizer indisponível, e é assim que a feature liga e desliga para o gratuito pelo admin ' +
+            'sem precisar de deploy.',
+          'Uma execução que passa do teto de custo para e devolve o que tem. Um laudo parcial vale mais que uma fatura ' +
+            'aberta.',
+          'Os nomes das ferramentas viram linguagem de gente antes de o laudo ser salvo. Um laudo real chegou ao cliente ' +
+            'dizendo `get_server retornou: "Não encontrei esse recurso"`.',
+        ],
+      },
+    ],
+  },
+
   engineering: {
-    intro: 'Três que deram trabalho de verdade, e alguns menores que ficaram anotados.',
+    intro: 'Quatro que deram trabalho de verdade, e alguns menores que ficaram anotados.',
     deepDives: [
       {
         ...f.deepDives.coldStorage,
@@ -219,6 +293,27 @@ export const ceuGgPtBr: CaseStudy = {
         outcome:
           'A garantia se sustenta por recusa, não por observação. Um servidor pago encontra seus recursos livres porque ' +
           'nada mais teve permissão de ocupá-los.',
+      },
+      {
+        ...f.deepDives.skyTools,
+        title: 'Deixar um modelo agir numa conta de verdade',
+        problem:
+          'No chat, diferente do diagnóstico, a Sky consegue ligar um servidor, reescrever um arquivo de configuração e ' +
+          'rodar comandos no console. Quem decide quando usar isso é o modelo.',
+        approach: [
+          'As ferramentas nunca encostam num repositório. Cada uma é uma chamada HTTP para a API da própria plataforma ' +
+            'levando o JWT do usuário, então quem responde se a ação é permitida é o mesmo ABAC, as mesmas ' +
+            'specifications e os mesmos eventos de domínio que respondem isso para um clique no painel.',
+          'A validade do token é checada antes da chamada. Sessão morta devolve um `session_expired` que também serve de ' +
+            'instrução: peça para a pessoa entrar de novo, não tente de novo sozinha.',
+          'O gate de plano pago falha fechado. Se a própria consulta do plano der erro, a escrita não acontece.',
+          'Qualquer coisa destrutiva devolve `needsConfirmation` em vez de rodar. A Sky precisa perguntar, esperar o sim, ' +
+            'e chamar de novo com `confirmed: true`.',
+        ],
+        outcome:
+          'O modelo escolhe o que tentar. Ele nunca escolhe o que tem permissão de fazer. O modo diagnóstico responde a ' +
+          'mesma pergunta apagando as ferramentas de escrita, porque lá a entrada é texto que qualquer jogador pode ter ' +
+          'escrito.',
       },
       {
         ...f.deepDives.skyDiagnostics,
@@ -359,6 +454,7 @@ export const ceuGgPtBr: CaseStudy = {
     { label: 'Frontend', items: f.stack.frontend },
     { label: 'Backend', items: f.stack.backend },
     { label: 'Dados', items: f.stack.data },
+    { label: 'IA', items: f.stack.ai },
     { label: 'Infraestrutura', items: f.stack.infrastructure },
     { label: 'Observabilidade', items: f.stack.observability },
     { label: 'Integrações', items: f.stack.integrations },

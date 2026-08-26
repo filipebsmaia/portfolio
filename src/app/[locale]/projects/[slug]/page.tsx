@@ -225,6 +225,23 @@ export default async function CaseStudyPage({ params }: PageProps) {
       </CaseStudySection>
 
       <CaseStudySection
+        id="sky"
+        fileName={`projects/${study.slug}/sky.md`}
+        title={study.sections.sky}
+        intro={study.sky.intro}
+      >
+        {study.sky.blocks.map((block, index) => (
+          <ScrollReveal key={block.id} delay={100 + index * 50}>
+            <div id={block.id} className={styles.subBlock}>
+              <p className={styles.subTitle}>{block.label}</p>
+              <p className={styles.prose}>{block.intro}</p>
+              <BulletPanel items={block.points} />
+            </div>
+          </ScrollReveal>
+        ))}
+      </CaseStudySection>
+
+      <CaseStudySection
         id="engineering"
         fileName={`projects/${study.slug}/engineering.md`}
         title={study.sections.engineering}
