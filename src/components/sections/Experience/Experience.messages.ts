@@ -19,6 +19,9 @@ const en = {
         'Cross-squad engineering support, building solutions and participating in architectural decisions and migrations to improve developer experience across teams.',
       highlights: [
         'Designed and shipped internal AI skills and agents that automate repetitive engineering workflows, freeing developers to focus on higher-value work.',
+        'Designed and built from scratch an AI agent platform for triaging and diagnosing customer issues, pointing the support team to the probable cause and the next step.',
+        'Created internal MCP servers that give agents controlled access to company systems, with human approval for actions and personal data protection.',
+        'Wired the agents into observability: they investigate production logs, traces and monitors via OpenTelemetry/Datadog, and the platform itself is instrumented with OpenTelemetry (GenAI conventions) to track quality, cost and user feedback.',
         'Defined adoption patterns and best practices for AI-assisted development across squads.',
         "Built the platform's managed API Gateway from scratch, a NestJS control plane for versioned routing and policy config plus a streaming data-plane proxy serving ~25M requests/month in production, removing the need for a commercial API management subscription (Apigee, Sensedia, Kong Enterprise) and its vendor lock-in.",
         'Modeled gateway configuration as data, so routes, policies, IP allow-groups, distributed rate limits (Valkey) and etc publish and roll back without a redeploy, with shadow mode to measure impact before enforcing.',
@@ -86,6 +89,9 @@ const ptBR: ExperienceMessages = {
         'Apoio de engenharia entre squads, construindo soluções e participando de decisões de arquitetura e migrações para melhorar a experiência de desenvolvimento dos times.',
       highlights: [
         'Criei e coloquei em produção skills e agentes de IA internos que automatizam fluxos repetitivos de engenharia, liberando os desenvolvedores para trabalho de maior valor.',
+        'Projetei e construí do zero uma plataforma de agentes de IA para triagem e diagnóstico de problemas de clientes, que aponta a causa provável e o próximo passo para o time de atendimento.',
+        'Criei servidores MCP internos para dar aos agentes acesso controlado aos sistemas da empresa, com aprovação humana para ações e proteção de dados pessoais.',
+        'Integrei os agentes à observabilidade: eles investigam logs, traces e monitores de produção via OpenTelemetry/Datadog, e a própria plataforma é instrumentada com OpenTelemetry (convenções GenAI) para acompanhar qualidade, custo e feedback dos usuários.',
         'Defini padrões de adoção e boas práticas de desenvolvimento assistido por IA entre as squads.',
         'Construí o API Gateway gerenciado da plataforma do zero: um control plane em NestJS para roteamento versionado e configuração de políticas, mais um proxy de data plane em streaming que serve ~25M de requisições/mês em produção - dispensando a assinatura de um API management comercial (Apigee, Sensedia, Kong Enterprise) e o vendor lock-in que vem junto.',
         'Modelei a configuração do gateway como dado, de modo que rotas, políticas, grupos de IP liberados, rate limits distribuídos (Valkey) e afins entram no ar e voltam atrás sem redeploy, com shadow mode para medir o impacto antes de aplicar.',

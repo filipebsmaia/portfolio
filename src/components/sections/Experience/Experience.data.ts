@@ -26,6 +26,8 @@ export const experienceEntries = [
       'PostgreSQL',
       'Claude',
       'AI Agents',
+      'MCP',
+      'LangChain',
     ],
   },
   {
